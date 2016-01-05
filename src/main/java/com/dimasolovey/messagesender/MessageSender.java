@@ -9,9 +9,9 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  */
 public class MessageSender {
     private final static int port = 10001;
-    private final static String host = "192.168.5.171";
+    private final static String host = "192.168.5.155";
 
-    public static void sendMessage(String message)   {
+    public static synchronized void sendMessage(String message)   {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap bootstrap = new Bootstrap()

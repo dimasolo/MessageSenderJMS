@@ -22,9 +22,21 @@ public class StopApplication implements Runnable {
             }
             if (string.equals("stop") || string.equals("exit") || string.equals("quit")) {
                 try {
-                    if (GetJMSMessages.getConnection() != null) {
-                        GetJMSMessages.getConnection().close();
-                        System.out.println("Connection is closed");
+                    if (GetJMSMessagesFromRX.getConnection() != null) {
+                        GetJMSMessagesFromRX.getConnection().close();
+                        System.out.println("Connection with RX queue is closed");
+                    }
+                    if (GetJMSMessagesFromAlarm.getConnection() != null) {
+                        GetJMSMessagesFromAlarm.getConnection().close();
+                        System.out.println("Connection with Alarm queue is closed");
+                    }
+                    if (GetJMSMessagesFromEvent.getConnection() != null) {
+                        GetJMSMessagesFromEvent.getConnection().close();
+                        System.out.println("Connection with Event queue is closed");
+                    }
+                    if (GetJMSMessagesFromLog.getConnection() != null) {
+                        GetJMSMessagesFromLog.getConnection().close();
+                        System.out.println("Connection with Log queue is closed");
                     }
                 } catch (JMSException e) {
                     e.printStackTrace();
@@ -34,5 +46,4 @@ public class StopApplication implements Runnable {
             }
         }
     }
-
 }
