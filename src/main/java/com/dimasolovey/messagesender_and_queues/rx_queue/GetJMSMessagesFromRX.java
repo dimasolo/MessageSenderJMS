@@ -1,5 +1,6 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues.rx_queue;
 
+import com.dimasolovey.messagesender_and_queues.sender.MessageSender;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
@@ -7,12 +8,12 @@ import javax.jms.*;
 /**
  * Created by dmitry.solovey on 05.01.2016.
  */
-public class GetJMSMessagesFromLog implements Runnable {
+public class GetJMSMessagesFromRX implements Runnable {
     private static ActiveMQConnectionFactory connectionFactory = null;
     private static Connection connection = null;
     private static Session session;
     private static Destination destination;
-    private static String queue = "dev.msy.queue.log.fwd";
+    private static String queue = "dev.dev.msy.queue.rx";
     private static String login = "admin";
     private static String password = "admin";
     private static String activeMQURL = "failover://tcp://192.168.4.31:61616";
@@ -20,6 +21,7 @@ public class GetJMSMessagesFromLog implements Runnable {
     public static Connection getConnection() {
         return connection;
     }
+
     @Override
     public void run() {
         connect();
@@ -33,7 +35,7 @@ public class GetJMSMessagesFromLog implements Runnable {
                         try {
                             TextMessage textMessage = (TextMessage) message;
                             long timestamp = message.getJMSTimestamp();
-                            String messageToSend = MessageToSendFromLogQueue.getMessageFromJsonFormat(textMessage.getText(),timestamp);
+                            String messageToSend = MessageToSendFromRXQueue.getMessageFromJsonFormat(textMessage.getText(), timestamp);
                             MessageSender.sendMessage(messageToSend);
                         } catch (JMSException ex) {
                             ex.printStackTrace();
@@ -47,7 +49,6 @@ public class GetJMSMessagesFromLog implements Runnable {
             }
         }
     }
-
     public static void connect() {
         try {
             if (connection == null) {

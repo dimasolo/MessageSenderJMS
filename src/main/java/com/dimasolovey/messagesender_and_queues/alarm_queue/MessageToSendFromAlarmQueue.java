@@ -1,4 +1,4 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues.alarm_queue;
 
 import com.dimasolovey.datapacket.*;
 import com.dimasolovey.datapacket.Error;

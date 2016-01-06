@@ -1,4 +1,4 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues.rx_queue;
 
 import com.dimasolovey.datapacket.*;
 import com.dimasolovey.datapacket.Error;
@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Created by dmitry.solovey on 05.01.2016.
  */
-public class MessageToSendFromEventQueue {
+public class MessageToSendFromRXQueue {
     private static IMEI imei;
     private static DataPacket accelerationInfo;
     private static DataPacket alarmNotification;
@@ -70,7 +70,6 @@ public class MessageToSendFromEventQueue {
     private static DataPacket wiMetaConfiguration;
     private static JsonParser jsonParser;
 
-
     public static synchronized String getMessageFromJsonFormat (String jsonMessage, long timestamp) {
         try {
             Map<String,JsonObject> dataPacketsMap = new HashMap<String, JsonObject>();
@@ -79,7 +78,6 @@ public class MessageToSendFromEventQueue {
             Object object = jsonParser.parse(jsonMessage);
             JsonObject jsonObject = (JsonObject) object;
             imei = new IMEI((JsonObject) jsonObject.get("imei"));
-
             JsonArray dataPackets = jsonObject.get("dataPackets").getAsJsonArray();
             for (int i = 0; i < dataPackets.size() ; i++) {
                 JsonArray array = dataPackets.get(i).getAsJsonArray();
@@ -367,7 +365,7 @@ public class MessageToSendFromEventQueue {
                     default: break;
                 }
             }
-            String message = "Event:" + imei + "," +  "Timestamp{" + "timestamp=" + timestamp + "}" + ",";
+            String message = "RX:" + imei + "," + "Timestamp{" + "timestamp=" + timestamp + "}" + ",";
             for (int i = 0; i < listOfDataPackets.size() ; i++) {
                 if (i == listOfDataPackets.size() - 1) {
                     message = message + listOfDataPackets.get(i).toString() + "\r\n";
@@ -379,6 +377,5 @@ public class MessageToSendFromEventQueue {
         } catch (Exception ex) {
             return "";
         }
-
     }
 }

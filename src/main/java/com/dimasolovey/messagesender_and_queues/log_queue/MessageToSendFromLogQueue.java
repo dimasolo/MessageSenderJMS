@@ -1,4 +1,4 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues.log_queue;
 
 import com.dimasolovey.datapacket.*;
 
@@ -384,6 +384,5 @@ public class MessageToSendFromLogQueue {
         } catch (Exception ex) {
             return "";
         }
-
     }
 }

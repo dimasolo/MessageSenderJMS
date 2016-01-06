@@ -1,18 +1,19 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues.crash_queue;
 
+import com.dimasolovey.messagesender_and_queues.sender.MessageSender;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
 /**
- * Created by dmitry.solovey on 05.01.2016.
+ * Created by dmitry.solovey on 06.01.2016.
  */
-public class GetJMSMessagesFromEvent implements Runnable {
+public class GetJMSMessagesFromCrash implements Runnable {
     private static ActiveMQConnectionFactory connectionFactory = null;
     private static Connection connection = null;
     private static Session session;
     private static Destination destination;
-    private static String queue = "dev.msy.queue.event.fwd";
+    private static String queue = "dev.msy.queue.crash.fwd";
     private static String login = "admin";
     private static String password = "admin";
     private static String activeMQURL = "failover://tcp://192.168.4.31:61616";
@@ -34,7 +35,9 @@ public class GetJMSMessagesFromEvent implements Runnable {
                         try {
                             TextMessage textMessage = (TextMessage) message;
                             long timestamp = message.getJMSTimestamp();
-                            String messageToSend = MessageToSendFromEventQueue.getMessageFromJsonFormat(textMessage.getText(), timestamp);
+                            boolean isCompressed = message.getBooleanProperty("compressed");
+                            String messageToSend = MessageToSendFromCrashQueue.getMessageFromJsonFormat(
+                                    textMessage.getText(), timestamp, isCompressed);
                             MessageSender.sendMessage(messageToSend);
                         } catch (JMSException ex) {
                             ex.printStackTrace();

@@ -1,4 +1,10 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues;
+
+import com.dimasolovey.messagesender_and_queues.alarm_queue.GetJMSMessagesFromAlarm;
+import com.dimasolovey.messagesender_and_queues.crash_queue.GetJMSMessagesFromCrash;
+import com.dimasolovey.messagesender_and_queues.event_queue.GetJMSMessagesFromEvent;
+import com.dimasolovey.messagesender_and_queues.log_queue.GetJMSMessagesFromLog;
+import com.dimasolovey.messagesender_and_queues.rx_queue.GetJMSMessagesFromRX;
 
 import javax.jms.JMSException;
 import java.io.BufferedReader;
@@ -37,6 +43,10 @@ public class StopApplication implements Runnable {
                     if (GetJMSMessagesFromLog.getConnection() != null) {
                         GetJMSMessagesFromLog.getConnection().close();
                         System.out.println("Connection with Log queue is closed");
+                    }
+                    if (GetJMSMessagesFromCrash.getConnection() != null) {
+                        GetJMSMessagesFromCrash.getConnection().close();
+                        System.out.println("Connection with Crash queue is closed");
                     }
                 } catch (JMSException e) {
                     e.printStackTrace();

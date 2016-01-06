@@ -1,4 +1,4 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues.sender;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

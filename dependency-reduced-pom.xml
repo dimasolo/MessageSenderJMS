@@ -18,7 +18,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.dimasolovey.messagesender.GetJMSMessages</mainClass>
+                  <mainClass>com.dimasolovey.messagesender_and_queues.Start</mainClass>
                 </transformer>
               </transformers>
             </configuration>

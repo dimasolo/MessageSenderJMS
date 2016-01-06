@@ -1,4 +1,4 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues.event_queue;
 
 import com.dimasolovey.datapacket.*;
 import com.dimasolovey.datapacket.Error;
@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Created by dmitry.solovey on 05.01.2016.
  */
-public class MessageToSendFromRXQueue {
+public class MessageToSendFromEventQueue {
     private static IMEI imei;
     private static DataPacket accelerationInfo;
     private static DataPacket alarmNotification;
@@ -79,6 +79,7 @@ public class MessageToSendFromRXQueue {
             Object object = jsonParser.parse(jsonMessage);
             JsonObject jsonObject = (JsonObject) object;
             imei = new IMEI((JsonObject) jsonObject.get("imei"));
+
             JsonArray dataPackets = jsonObject.get("dataPackets").getAsJsonArray();
             for (int i = 0; i < dataPackets.size() ; i++) {
                 JsonArray array = dataPackets.get(i).getAsJsonArray();
@@ -366,7 +367,7 @@ public class MessageToSendFromRXQueue {
                     default: break;
                 }
             }
-            String message = "RX:" + imei + "," + "Timestamp{" + "timestamp=" + timestamp + "}" + ",";
+            String message = "Event:" + imei + "," +  "Timestamp{" + "timestamp=" + timestamp + "}" + ",";
             for (int i = 0; i < listOfDataPackets.size() ; i++) {
                 if (i == listOfDataPackets.size() - 1) {
                     message = message + listOfDataPackets.get(i).toString() + "\r\n";

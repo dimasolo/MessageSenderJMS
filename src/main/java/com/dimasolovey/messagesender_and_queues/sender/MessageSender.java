@@ -1,4 +1,4 @@
-package com.dimasolovey.messagesender;
+package com.dimasolovey.messagesender_and_queues.sender;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
