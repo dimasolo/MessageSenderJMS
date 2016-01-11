@@ -1,5 +1,6 @@
 package com.dimasolovey.messagesender_and_queues.sender;
 
+import com.dimasolovey.messagesender_and_queues.Start;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -8,12 +9,15 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  * Created by dmitry.solovey on 16.12.2015.
  */
 public class MessageSender {
-    private final static int port = 10001;
-    private final static String host = "192.168.5.155";
+    private static int port;
+    private static String host;
 
     public static synchronized void sendMessage(String message)   {
+
         EventLoopGroup group = new NioEventLoopGroup();
         try {
+            port = Start.getPort();
+            host = Start.getHost();
             Bootstrap bootstrap = new Bootstrap()
                     .group(group)
                     .channel(NioSocketChannel.class)
